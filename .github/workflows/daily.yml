@@ -1,0 +1,30 @@
+name: Daily Telegram counter
+
+on:
+  schedule:
+    - cron: "0 15 * * *"
+      timezone: "Europe/Moscow"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  send-message:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download project
+        uses: actions/checkout@v4
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Send message to Telegram
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          START_DATE: "2026-08-31"
+          TIMEZONE: "Europe/Moscow"
+        run: python bot.py
