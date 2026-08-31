@@ -1,0 +1,16 @@
+services:
+  - type: cron
+    name: telegram-counter-bot
+    runtime: python
+    schedule: "0 12 * * *"
+    buildCommand: pip install -r requirements.txt
+    startCommand: python bot.py
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false
+      - key: START_DATE
+        value: "2026-08-31"
+      - key: TIMEZONE
+        value: "Europe/Moscow"
